@@ -1,4 +1,4 @@
-@import url('modale.css');
+@import url('./modale.css');
 
 body {
     font-family: "DM Sans", sans-serif;
@@ -7,10 +7,12 @@ body {
     padding: 43px 100px 0;
 }
 
+/*HEADER*/
 .logo {
     height: 50px;
 }
 
+/*PHOTOGRAPHER HEADBAND*/
 .photograph-header {
     display: flex;
     justify-content: space-between;
@@ -44,4 +46,57 @@ body {
     width: 200px;
     border-radius: 50%;
     box-shadow: 1px 2px 6px rgba(0, 0, 0, .4);
+}
+
+/*SORT SECTION*/
+.sort-section {
+    margin: 20px 0 58px;
+}
+
+.sort-section label {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-right: 25px;
+}
+
+.sort-select {
+    width: 170px;
+    background-color: #901C1C;
+    outline: none;
+    border: none;
+    border-radius: 5px 5px 0 0;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.sort-select:focus {
+    outline: none;
+}
+
+/*MEDIA GALLERY*/
+.gallery-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: 95px;
+    grid-row-gap: 30px;
+}
+
+.media-element {
+    width: 350px;
+    height: 300px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.figcaption-element {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+    color: #901C1C;
+}
+
+.figcaption-element h2 {
+    font-weight: 400;
 }
