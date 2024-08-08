@@ -1,13 +1,13 @@
 class MediaModel {
-    constructor(data) {
-        this.id = data.id;
-        this.photographerId = data.photographerId;
-        this.title = data.title;
-        this.image = data.image || null;
-        this.video = data.video || null;
-        this.likes = data.likes;
-        this.date = data.date;
-        this.price = data.price;
+    constructor(mediaData) {
+        this.id = mediaData.id;
+        this.photographerId = mediaData.photographerId;
+        this.title = mediaData.title;
+        this.image = mediaData.image || null;
+        this.video = mediaData.video || null;
+        this.likes = mediaData.likes;
+        this.date = mediaData.date;
+        this.price = mediaData.price;
     }
 
     getMediaPath() {
@@ -17,6 +17,14 @@ class MediaModel {
             return `assets/media/${this.video}`;
         }
         return '';
+    }
+
+    incrementLikes() {
+        this.likes++;
+    }
+
+    decrementLikes() {
+        this.likes--;
     }
 }
 

@@ -80,6 +80,7 @@ body {
     grid-template-columns: 1fr 1fr 1fr;
     grid-column-gap: 95px;
     grid-row-gap: 30px;
+    margin-bottom: 25px;
 }
 
 .media-element {
@@ -87,16 +88,24 @@ body {
     height: 300px;
     border-radius: 5px;
     object-fit: cover;
+    cursor: pointer;
 }
 
 .figcaption-element {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 1.2rem;
     color: #901C1C;
 }
 
 .figcaption-element h2 {
     font-weight: 400;
+}
+
+.likes {
+    font-weight: 500;
+}
+
+.heart-icon {
+    cursor: pointer;
 }

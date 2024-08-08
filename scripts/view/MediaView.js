@@ -27,10 +27,12 @@ class MediaView {
         likesElement.className = 'likes';
 
         const likesCount = document.createElement('span');
+        likesCount.className = 'likes-count';
         likesCount.textContent = `${likes} `;
 
-        const heartIcon = document.createElement('i');
-        heartIcon.className = 'fas fa-heart';
+        const heartIcon = document.createElement('span');
+        heartIcon.className = 'heart-icon';
+        heartIcon.textContent = '❤️';
 
         likesElement.appendChild(likesCount);
         likesElement.appendChild(heartIcon);
@@ -41,7 +43,22 @@ class MediaView {
         mediaFigure.appendChild(mediaElement);
         mediaFigure.appendChild(figcaptionElement);
 
+        heartIcon.addEventListener('click', () => this.handleLikeClick(likesCount, heartIcon));
+
         return mediaFigure;
+    }
+
+    handleLikeClick(likesCountElement, heartIconElement) {
+        const currentLikes = parseInt(likesCountElement.textContent.trim(), 10);
+        if (heartIconElement.classList.contains('liked')) {
+            likesCountElement.textContent = `${currentLikes - 1} `;
+            heartIconElement.classList.remove('liked');
+            this.model.decrementLikes();
+        } else {
+            likesCountElement.textContent = `${currentLikes + 1} `;
+            heartIconElement.classList.add('liked');
+            this.model.incrementLikes();
+        }
     }
 }
 
