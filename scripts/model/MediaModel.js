@@ -1,5 +1,3 @@
-import LikeModel from "./LikeModel.js";
-
 class MediaModel {
     constructor(mediaData) {
         this.id = mediaData.id;
@@ -10,8 +8,6 @@ class MediaModel {
         this.likes = mediaData.likes;
         this.date = mediaData.date;
         this.price = mediaData.price;
-
-        this.likesManager = new LikeModel(mediaData.likes);
     }
 
     getMediaPath() {
@@ -29,6 +25,10 @@ class MediaModel {
 
     decrementLikes() {
         this.likes--;
+    }
+
+    getLikes() {
+        return this.likes;
     }
 }
 

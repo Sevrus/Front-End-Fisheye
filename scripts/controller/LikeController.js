@@ -1,31 +1,34 @@
 class LikeController {
-    constructor(likeModel, likeView) {
-        this.model = likeModel;
-        this.view = likeView;
-        this.isLiked = false;
+    constructor(likeModel, likeView, updateLikesCallback) {
+        this.likeModel = likeModel;
+        this.likeView = likeView;
+        this.updateLikesCallback = updateLikesCallback;
 
-        this.likeDOM = this.view.createLikeDOM();
+        console.log("Initializing LikeController with likeModel:", likeModel);
 
-        this.view.bindLikeClick(this.handleLikeClick);
+        // Bind the click event to handle likes
+        this.likeView.bindLikeClick(() => this.handleLikeClick());
+
+        // Subscribe to like model changes
+        this.likeModel.addListener(() => {
+            console.log("LikeModel updated. Current likes:", this.likeModel.getLikes());
+            this.updateLikesCallback();
+        });
     }
 
-    handleLikeClick = () => {
-        console.log('Clic détecté sur le bouton de like');
-
-        if (this.isLiked) {
-            this.model.decrementLikes();
-            this.isLiked = false;
+    handleLikeClick() {
+        if (this.likeView.heartIconElement.classList.contains('liked')) {
+            this.likeModel.decrementLikes();
+            this.likeView.heartIconElement.classList.remove('liked');
         } else {
-            this.model.incrementLikes();
-            this.isLiked = true;
+            this.likeModel.incrementLikes();
+            this.likeView.heartIconElement.classList.add('liked');
         }
+        this.likeView.updateLikeCount(this.likeModel.getLikes());
 
-        this.view.updateLikes();
-        this.view.toggleHeartIcon(this.isLiked);
-    }
-
-    getLikeView() {
-        return this.likeDOM;
+        // Notify the MediaController about the like change
+        console.log("Like clicked. Updating total likes.");
+        this.updateLikesCallback();
     }
 }
 

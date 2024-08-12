@@ -1,5 +1,4 @@
 import LikeView from './LikeView.js';
-import LikeController from '../controller/LikeController.js';
 
 class MediaView {
     constructor(model) {
@@ -26,11 +25,19 @@ class MediaView {
         const titleElement = document.createElement('h2');
         titleElement.textContent = title;
 
-        // Utilisez le LikeManager déjà initialisé dans MediaModel
-        const likeView = new LikeView(this.model.likesManager);
-        const likeController = new LikeController(this.model.likesManager, likeView);
+        const likesElement = document.createElement('div');
+        likesElement.className = 'likes';
 
-        const likesElement = likeController.getLikeView();
+        const likesCount = document.createElement('span');
+        likesCount.className = 'likes-count';
+        likesCount.textContent = `${this.model.likes} `;
+
+        const heartIcon = document.createElement('span');
+        heartIcon.className = 'heart-icon';
+        heartIcon.textContent = '❤️';
+
+        likesElement.appendChild(likesCount);
+        likesElement.appendChild(heartIcon);
 
         figcaptionElement.appendChild(titleElement);
         figcaptionElement.appendChild(likesElement);
@@ -38,7 +45,15 @@ class MediaView {
         mediaFigure.appendChild(mediaElement);
         mediaFigure.appendChild(figcaptionElement);
 
+        // Create an instance of LikeView
+        this.likeView = new LikeView(likesCount, heartIcon);
+
+        // Return the DOM element
         return mediaFigure;
+    }
+
+    getLikeView() {
+        return this.likeView;
     }
 }
 

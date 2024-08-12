@@ -1,11 +1,15 @@
 import getDatas from '../utils/fetchData.js';
 import MediaModel from '../model/MediaModel.js';
 import MediaView from '../view/MediaView.js';
+import LikeModel from '../model/LikeModel.js';
+import LikeController from '../controller/LikeController.js';
 
 class MediaController {
     constructor() {
         this.gallerySection = document.querySelector(".gallery-section");
         this.sortSelect = document.querySelector(".sort-select");
+        this.totalLikesElement = document.querySelector(".total-likes");
+        this.dailyRateElement = document.querySelector(".daily-rate");
         this.params = new URLSearchParams(window.location.search);
         this.photographerId = this.params.get('id');
     }
@@ -15,6 +19,9 @@ class MediaController {
         const mediaData = data.media.filter(media => media.photographerId === Number(this.photographerId));
         this.mediaModels = mediaData.map(media => new MediaModel(media));
         this.displayMedia(this.mediaModels);
+
+        // Initial update of sticky footer
+        this.updateStickyFooter(data.photographers);
     }
 
     displayMedia(mediaModels) {
@@ -22,8 +29,28 @@ class MediaController {
         mediaModels.forEach(mediaModel => {
             const mediaView = new MediaView(mediaModel);
             const mediaCardDOM = mediaView.createMediaDOM();
+
+            // Create a LikeModel and LikeController for each media item
+            const likeModel = new LikeModel(mediaModel.getLikes());
+            console.log("Creating LikeController for media:", mediaModel.title);
+            new LikeController(likeModel, mediaView.getLikeView(), this.updateTotalLikesDisplay.bind(this));
+
             this.gallerySection.appendChild(mediaCardDOM);
         });
+    }
+
+    updateStickyFooter(photographers) {
+        const photographer = photographers.find(p => p.id === Number(this.photographerId));
+        if (photographer) {
+            this.updateTotalLikesDisplay();
+            this.dailyRateElement.textContent = `${photographer.price}€ / jour`;
+        }
+    }
+
+    updateTotalLikesDisplay() {
+        const totalLikes = this.mediaModels.reduce((sum, media) => sum + media.getLikes(), 0);
+        console.log("Updating total likes in footer. Total likes:", totalLikes);
+        this.totalLikesElement.textContent = `❤️ ${totalLikes} likes`;
     }
 
     sortMedia(criteria) {

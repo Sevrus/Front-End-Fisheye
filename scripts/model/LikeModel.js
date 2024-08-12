@@ -1,18 +1,29 @@
 class LikeModel {
     constructor(initialLikes) {
         this.likes = initialLikes;
-    }
-
-    incrementLikes() {
-        this.likes++;
-    }
-
-    decrementLikes() {
-        this.likes--;
+        this.listeners = [];
     }
 
     getLikes() {
         return this.likes;
+    }
+
+    incrementLikes() {
+        this.likes++;
+        this.notifyListeners();
+    }
+
+    decrementLikes() {
+        this.likes--;
+        this.notifyListeners();
+    }
+
+    addListener(callback) {
+        this.listeners.push(callback);
+    }
+
+    notifyListeners() {
+        this.listeners.forEach(callback => callback(this.likes));
     }
 }
 
