@@ -1,10 +1,13 @@
+import LikeView from './LikeView.js';
+import LikeController from '../controller/LikeController.js';
+
 class MediaView {
     constructor(model) {
         this.model = model;
     }
 
     createMediaDOM() {
-        const { title, likes } = this.model;
+        const { title } = this.model;
         const mediaPath = this.model.getMediaPath();
 
         const mediaFigure = document.createElement('figure');
@@ -23,19 +26,11 @@ class MediaView {
         const titleElement = document.createElement('h2');
         titleElement.textContent = title;
 
-        const likesElement = document.createElement('div');
-        likesElement.className = 'likes';
+        // Utilisez le LikeManager déjà initialisé dans MediaModel
+        const likeView = new LikeView(this.model.likesManager);
+        const likeController = new LikeController(this.model.likesManager, likeView);
 
-        const likesCount = document.createElement('span');
-        likesCount.className = 'likes-count';
-        likesCount.textContent = `${likes} `;
-
-        const heartIcon = document.createElement('span');
-        heartIcon.className = 'heart-icon';
-        heartIcon.textContent = '❤️';
-
-        likesElement.appendChild(likesCount);
-        likesElement.appendChild(heartIcon);
+        const likesElement = likeController.getLikeView();
 
         figcaptionElement.appendChild(titleElement);
         figcaptionElement.appendChild(likesElement);
@@ -43,22 +38,7 @@ class MediaView {
         mediaFigure.appendChild(mediaElement);
         mediaFigure.appendChild(figcaptionElement);
 
-        heartIcon.addEventListener('click', () => this.handleLikeClick(likesCount, heartIcon));
-
         return mediaFigure;
-    }
-
-    handleLikeClick(likesCountElement, heartIconElement) {
-        const currentLikes = parseInt(likesCountElement.textContent.trim(), 10);
-        if (heartIconElement.classList.contains('liked')) {
-            likesCountElement.textContent = `${currentLikes - 1} `;
-            heartIconElement.classList.remove('liked');
-            this.model.decrementLikes();
-        } else {
-            likesCountElement.textContent = `${currentLikes + 1} `;
-            heartIconElement.classList.add('liked');
-            this.model.incrementLikes();
-        }
     }
 }
 
