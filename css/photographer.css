@@ -109,3 +109,21 @@ body {
 .heart-icon {
     cursor: pointer;
 }
+
+/*STICKY-FOOTER*/
+.sticky-footer {
+    width: 376px;
+    margin-left: 928px;
+    display: flex;
+    justify-content: space-between;
+    position: sticky;
+    bottom: 0;
+    background-color: #DB8876;
+    border-radius: 5px 5px 0 0;
+    padding: 18px 33px;
+}
+
+.sticky-footer span {
+    color: #000;
+    font-size: 1.5rem;
+}

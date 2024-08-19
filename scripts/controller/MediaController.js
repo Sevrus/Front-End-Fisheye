@@ -31,7 +31,7 @@ class MediaController {
             const mediaCardDOM = mediaView.createMediaDOM();
 
             // Create a LikeModel and LikeController for each media item
-            const likeModel = new LikeModel(mediaModel.getLikes());
+            const likeModel = mediaModel.likeModel;
             console.log("Creating LikeController for media:", mediaModel.title);
             new LikeController(likeModel, mediaView.getLikeView(), this.updateTotalLikesDisplay.bind(this));
 
@@ -48,10 +48,20 @@ class MediaController {
     }
 
     updateTotalLikesDisplay() {
-        const totalLikes = this.mediaModels.reduce((sum, media) => sum + media.getLikes(), 0);
-        console.log("Updating total likes in footer. Total likes:", totalLikes);
-        this.totalLikesElement.textContent = `❤️ ${totalLikes} likes`;
+        console.log("Media models:", this.mediaModels); // Vérifiez les modèles
+        const totalLikes = this.mediaModels.reduce((sum, media) => {
+            const likes = media.getLikes();
+            console.log(`Media ID: ${media.id}, Likes: ${likes}`); // Vérifiez les likes individuels
+            return sum + likes;
+        }, 0);
+        console.log("Updating total likes in footer. Total likes:", totalLikes); // Vérifiez le total
+        if (this.totalLikesElement) {
+            this.totalLikesElement.textContent = `${totalLikes} ❤️`;
+        } else {
+            console.warn("totalLikesElement not found!");
+        }
     }
+
 
     sortMedia(criteria) {
         let sortedMedia;
