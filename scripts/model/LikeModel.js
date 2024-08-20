@@ -10,14 +10,12 @@ class LikeModel {
 
     incrementLikes() {
         this.likes++;
-        console.log("Likes incremented in LikeModel:", this.likes);
         debugger;
         this.notifyListeners();
     }
 
     decrementLikes() {
         this.likes--;
-        console.log("Likes decremented in LikeModel:", this.likes);
         this.notifyListeners();
     }
 

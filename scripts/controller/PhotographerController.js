@@ -1,15 +1,15 @@
 import getDatas from "../utils/fetchData.js";
-import {closeModal, displayModal} from "../utils/contactForm.js";
 import PhotographerModel from '../model/PhotographerModel.js'
 import PhotographerView from '../view/PhotographerView.js'
+import ContactController from './ContactController.js';
 
 class PhotographerController {
     constructor() {
-        this.headerButtonContact = document.querySelector(".header-button");
-        this.targetCloseModal = document.querySelector(".close-modal");
         this.photographersSection = document.querySelector(".photographer_section");
+        this.contactButton = document.querySelector('.contact_button');
         this.params = new URLSearchParams(window.location.search);
         this.idOfPhotographer = this.params.get('id');
+        this.contactController = null;
     }
 
     async fetchAndDisplayData() {
@@ -21,6 +21,9 @@ class PhotographerController {
             const photographerModel = new PhotographerModel(photographerData);
             const photographerView = new PhotographerView(photographerModel);
             photographerView.createPhotographerHeaderDOM();
+
+            const artistName = photographerModel.name;
+            this.contactController = new ContactController(artistName);
         } else {
             this.displayPhotographers(photographersData);
         }
@@ -36,9 +39,12 @@ class PhotographerController {
     }
 
     initializeEventListeners() {
-        if (this.headerButtonContact && this.targetCloseModal) {
-            this.headerButtonContact.addEventListener("click", displayModal);
-            this.targetCloseModal.addEventListener("click", closeModal);
+        if (this.contactButton) {
+            this.contactButton.addEventListener('click', () => {
+                if (this.contactController) {
+                    this.contactController.showContactModal();
+                }
+            });
         }
     }
 
