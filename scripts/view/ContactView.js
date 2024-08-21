@@ -26,6 +26,7 @@ class ContactView {
 
     showModal() {
         this.modal.style.display = 'block';
+        this.trapFocus();
     }
 
     hideModal() {
@@ -37,11 +38,10 @@ class ContactView {
     }
 
     displayErrors(errors) {
-        // Effacer les erreurs existantes
         const errorElements = this.form.querySelectorAll('.error');
         errorElements.forEach(el => el.remove());
+        console.log(errorElements);
 
-        // Afficher les nouvelles erreurs sous chaque champ
         errors.forEach(error => {
             const field = this.form.querySelector(`[name="${error.field}"]`);
             if (field) {
@@ -51,6 +51,34 @@ class ContactView {
                 field.parentNode.insertBefore(errorElement, field.nextSibling);
             }
         });
+    }
+
+    resetForm() {
+        this.form.reset();
+    }
+
+    trapFocus() {
+        const focusableElements = this.modal.querySelectorAll('button, input, textarea');
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        this.modal.addEventListener('keydown', (event) => {
+            if (event.key === 'Tab') {
+                if (event.shiftKey) {
+                    if (document.activeElement === firstElement) {
+                        event.preventDefault();
+                        lastElement.focus();
+                    }
+                } else {
+                    if (document.activeElement === lastElement) {
+                        event.preventDefault();
+                        firstElement.focus();
+                    }
+                }
+            }
+        });
+
+        firstElement.focus();
     }
 
 }

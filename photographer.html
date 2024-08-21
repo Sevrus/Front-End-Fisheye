@@ -20,7 +20,7 @@
         <label for="sort-select">Trier par</label>
         <select class="sort-select" id="sort-select">
             <option value="date">Date</option>
-            <option value="title">Titre</option>
+            <option value="title">Titre</option>last-
             <option value="likes">Popularité</option>
         </select>
     </section>
@@ -33,17 +33,19 @@
 <div id="contact-modal">
     <div class="modal">
         <header>
-            <h2><span>Contactez-moi</span><span class="artist-name"></span></h2>
-            <img src="assets/icons/close.svg" class="close-modal" alt=""/>
+            <h2>Contactez-moi<span class="artist-name"></span></h2>
+            <button class="close-modal" aria-label="Fermer la modale">
+                <img src="assets/icons/close.svg" alt="Fermer" />
+            </button>
         </header>
-        <form>
+        <form action="" method="get">
             <div>
                 <label for="first-name">Prénom</label>
-                <input type="text" name="first-name" id="first-name"/>
+                <input type="text" name="first-name" id="first-name" minlength="2">
             </div>
             <div>
-                <label for="name">Nom</label>
-                <input type="text" name="name" id="name">
+                <label for="last-name">Nom</label>
+                <input type="text" name="last-name" id="last-name" minlength="2">
             </div>
             <div>
                 <label for="email">Email</label>
@@ -53,7 +55,7 @@
                 <label for="message">Votre message</label>
                 <textarea name="message" id="message"></textarea>
             </div>
-            <button class="contact_button">Envoyer</button>
+            <button type="submit" class="contact_button">Envoyer</button>
         </form>
     </div>
 </div>

@@ -10,7 +10,6 @@ class ContactController {
         this.contactView.bindInputChange(this.handleInputChange.bind(this));
         this.contactView.bindCloseModal(this.handleCloseModal.bind(this));
 
-        // Mettre à jour le nom de l'artiste dans la modale
         this.contactView.updateArtistName(artistName);
     }
 
@@ -18,15 +17,16 @@ class ContactController {
         this.contactModel.setFields(field, value);
     }
 
-    handleSubmit(formData) {
-        // Validation des champs
+    handleSubmit() {
         const errors = this.contactModel.validateFields();
 
         if (errors.length > 0) {
             this.contactView.displayErrors(errors);
         } else {
             console.log("Données du formulaire :", this.contactModel.getFormData());
+            this.contactView.resetForm();
             this.contactView.hideModal();
+            this.contactModel.resetFormData();
         }
     }
 

@@ -54,7 +54,6 @@ class PhotographerController {
     }
 }
 
-// Utilisation
 document.addEventListener("DOMContentLoaded", () => {
     const photographerController = new PhotographerController();
     photographerController.initialize();
