@@ -1,8 +1,10 @@
-import LikeView from './LikeView.js';
+import LightboxController from '../controller/LightboxController.js';
+import LikeView from "./LikeView.js";
 
 class MediaView {
-    constructor(model) {
+    constructor(model, mediaList) {
         this.model = model;
+        this.mediaList = mediaList;
     }
 
     createMediaDOM() {
@@ -11,11 +13,11 @@ class MediaView {
 
         const mediaFigure = document.createElement('figure');
 
-        const mediaElement = document.createElement(this.model.image ? 'img' : 'video');
+        const mediaElement = document.createElement(this.model.isImage() ? 'img' : 'video');
         mediaElement.className = 'media-element';
         mediaElement.setAttribute('src', mediaPath);
         mediaElement.setAttribute('alt', title);
-        if (this.model.video) {
+        if (this.model.isVideo()) {
             mediaElement.setAttribute('controls', 'controls');
         }
 
@@ -45,10 +47,15 @@ class MediaView {
         mediaFigure.appendChild(mediaElement);
         mediaFigure.appendChild(figcaptionElement);
 
+        // Crée une instance de LightboxController pour ouvrir la lightbox au clic
+        mediaElement.addEventListener('click', () => {
+            new LightboxController(this.model, this.mediaList).openLightbox();
+        });
+
         // Create an instance of LikeView
         this.likeView = new LikeView(likesCount, heartIcon);
 
-        // Return the DOM element
+        // Retourne l'élément DOM
         return mediaFigure;
     }
 

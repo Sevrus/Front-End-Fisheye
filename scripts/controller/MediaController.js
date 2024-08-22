@@ -27,7 +27,7 @@ class MediaController {
     displayMedia(mediaModels) {
         this.gallerySection.innerHTML = '';
         mediaModels.forEach(mediaModel => {
-            const mediaView = new MediaView(mediaModel);
+            const mediaView = new MediaView(mediaModel, mediaModels); // Passer toute la liste
             const mediaCardDOM = mediaView.createMediaDOM();
 
             // Create a LikeModel and LikeController for each media item

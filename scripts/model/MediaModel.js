@@ -23,6 +23,14 @@ class MediaModel {
         return '';
     }
 
+    isImage() {
+        return Boolean(this.image);
+    }
+
+    isVideo() {
+        return Boolean(this.video);
+    }
+
     getLikes() {
         return this.likeModel.getLikes();
     }
