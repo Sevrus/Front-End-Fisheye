@@ -47,6 +47,9 @@ class LightboxView {
 
     hide() {
         this.lightboxElement.style.display = 'none';
+        window.setTimeout(() => {
+            this.lightboxElement.remove();
+        }, 500)
     }
 }
 
