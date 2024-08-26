@@ -12,6 +12,10 @@ class PhotographerController {
         this.contactController = null;
     }
 
+    /**
+     *
+     * @returns {Promise<void>}
+     */
     async fetchAndDisplayData() {
         const data = await getDatas();
         const photographersData = data.photographers;
@@ -29,6 +33,10 @@ class PhotographerController {
         }
     }
 
+    /**
+     *
+     * @param photographers
+     */
     displayPhotographers(photographers) {
         photographers.forEach((photographerData) => {
             const photographerModel = new PhotographerModel(photographerData);
@@ -38,6 +46,9 @@ class PhotographerController {
         });
     }
 
+    /**
+     *
+     */
     initializeEventListeners() {
         if (this.contactButton) {
             this.contactButton.addEventListener('click', () => {
@@ -48,6 +59,10 @@ class PhotographerController {
         }
     }
 
+    /**
+     *
+     * @returns {Promise<void>}
+     */
     async initialize() {
         await this.fetchAndDisplayData();
         this.initializeEventListeners();

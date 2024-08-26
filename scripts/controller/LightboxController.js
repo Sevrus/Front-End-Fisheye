@@ -33,6 +33,10 @@ class LightboxController {
         this.view.showMedia(prevMedia);
     }
 
+    /**
+     * Management of navigation and closing of the lightbox
+     * @param {KeyboardEvent} event
+     */
     handleKeyUp(event) {
         if (event.key === 'Escape') {
             this.closeLightbox();

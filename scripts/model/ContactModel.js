@@ -3,6 +3,9 @@ class ContactModel {
         this.resetFormData();
     }
 
+    /**
+     *
+     */
     resetFormData() {
         this.formData = {
             'first-name': '',
@@ -12,10 +15,19 @@ class ContactModel {
         };
     }
 
+    /**
+     *
+     * @param field
+     * @param value
+     */
     setFields(field, value) {
         this.formData[field] = value;
     }
 
+    /**
+     *
+     * @returns {*[]}
+     */
     validateFields() {
         const { 'first-name': firstName, 'last-name': lastName, email, message } = this.formData;
         console.log(this.formData);
@@ -40,6 +52,10 @@ class ContactModel {
         return errors;
     }
 
+    /**
+     *
+     * @returns {*|{message: string, "first-name": string, email: string, "last-name": string}}
+     */
     getFormData() {
         return this.formData;
     }

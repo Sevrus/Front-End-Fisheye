@@ -4,10 +4,18 @@ class LikeView {
         this.heartIconElement = heartIconElement;
     }
 
+    /**
+     *
+     * @param newCount
+     */
     updateLikeCount(newCount) {
         this.likesCountElement.textContent = `${newCount} `;
     }
 
+    /**
+     *
+     * @param callback
+     */
     bindLikeClick(callback) {
         this.heartIconElement.addEventListener('click', callback);
     }

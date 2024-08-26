@@ -7,6 +7,10 @@ class MediaView {
         this.mediaList = mediaList;
     }
 
+    /**
+     *
+     * @returns {HTMLElement} mediaFigure
+     */
     createMediaDOM() {
         const { title } = this.model;
         const mediaPath = this.model.getMediaPath();
@@ -47,15 +51,12 @@ class MediaView {
         mediaFigure.appendChild(mediaElement);
         mediaFigure.appendChild(figcaptionElement);
 
-        // Crée une instance de LightboxController pour ouvrir la lightbox au clic
         mediaElement.addEventListener('click', () => {
             new LightboxController(this.model, this.mediaList).openLightbox();
         });
 
-        // Create an instance of LikeView
         this.likeView = new LikeView(likesCount, heartIcon);
 
-        // Retourne l'élément DOM
         return mediaFigure;
     }
 

@@ -3,6 +3,10 @@ class PhotographerView {
         this.model = model;
     }
 
+    /**
+     *
+     * @returns {HTMLElement}
+     */
     createUserCardDOM() {
         const {name, id, city, country, tagline, price} = this.model;
         const picture = this.model.getPicturePath();
@@ -40,6 +44,9 @@ class PhotographerView {
         return cardArticle;
     }
 
+    /**
+     *
+     */
     createPhotographerHeaderDOM() {
         const { name, city, country, tagline } = this.model;
         const picture = this.model.getPicturePath();

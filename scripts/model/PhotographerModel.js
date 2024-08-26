@@ -9,6 +9,10 @@ class PhotographerModel {
         this.price = data.price;
     }
 
+    /**
+     *
+     * @returns {string}
+     */
     getPicturePath() {
         return `assets/photographers/${this.portrait}`;
     }

@@ -1,7 +1,6 @@
 import getDatas from '../utils/fetchData.js';
 import MediaModel from '../model/MediaModel.js';
 import MediaView from '../view/MediaView.js';
-import LikeModel from '../model/LikeModel.js';
 import LikeController from '../controller/LikeController.js';
 
 class MediaController {
@@ -14,23 +13,29 @@ class MediaController {
         this.photographerId = this.params.get('id');
     }
 
+    /**
+     *
+     * @returns {Promise<void>}
+     */
     async fetchAndDisplayMedia() {
         const data = await getDatas();
         const mediaData = data.media.filter(media => media.photographerId === Number(this.photographerId));
         this.mediaModels = mediaData.map(media => new MediaModel(media));
         this.displayMedia(this.mediaModels);
 
-        // Initial update of sticky footer
         this.updateStickyFooter(data.photographers);
     }
 
+    /**
+     *
+     * @param mediaModels
+     */
     displayMedia(mediaModels) {
         this.gallerySection.innerHTML = '';
         mediaModels.forEach(mediaModel => {
-            const mediaView = new MediaView(mediaModel, mediaModels); // Passer toute la liste
+            const mediaView = new MediaView(mediaModel, mediaModels);
             const mediaCardDOM = mediaView.createMediaDOM();
 
-            // Create a LikeModel and LikeController for each media item
             const likeModel = mediaModel.likeModel;
             new LikeController(likeModel, mediaView.getLikeView(), this.updateTotalLikesDisplay.bind(this));
 
@@ -38,6 +43,10 @@ class MediaController {
         });
     }
 
+    /**
+     *
+     * @param photographers
+     */
     updateStickyFooter(photographers) {
         const photographer = photographers.find(p => p.id === Number(this.photographerId));
         if (photographer) {
@@ -46,6 +55,9 @@ class MediaController {
         }
     }
 
+    /**
+     *
+     */
     updateTotalLikesDisplay() {
         const totalLikes = this.mediaModels.reduce((sum, media) => {
             const likes = media.getLikes();
@@ -58,7 +70,10 @@ class MediaController {
         }
     }
 
-
+    /**
+     *
+     * @param {string} criteria
+     */
     sortMedia(criteria) {
         let sortedMedia;
         switch (criteria) {
@@ -78,12 +93,19 @@ class MediaController {
         this.displayMedia(sortedMedia);
     }
 
+    /**
+     *
+     */
     initializeEventListeners() {
         this.sortSelect.addEventListener('change', (event) => {
             this.sortMedia(event.target.value);
         });
     }
 
+    /**
+     *
+     * @returns {Promise<void>}
+     */
     async initialize() {
         await this.fetchAndDisplayMedia();
         this.initializeEventListeners();

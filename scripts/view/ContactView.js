@@ -6,6 +6,10 @@ class ContactView {
         this.artistNameElement = this.modal.querySelector('.artist-name');
     }
 
+    /**
+     *
+     * @param callback
+     */
     bindSubmit(callback) {
         this.form.addEventListener('submit', (event) => {
             event.preventDefault();
@@ -13,10 +17,18 @@ class ContactView {
         });
     }
 
+    /**
+     *
+     * @param callback
+     */
     bindCloseModal(callback) {
         this.closeButton.addEventListener('click', callback);
     }
 
+    /**
+     *
+     * @param callback
+     */
     bindInputChange(callback) {
         this.form.addEventListener('input', (event) => {
             const { name, value } = event.target;
@@ -24,19 +36,33 @@ class ContactView {
         });
     }
 
+    /**
+     *
+     */
     showModal() {
         this.modal.style.display = 'block';
         this.trapFocus();
     }
 
+    /**
+     *
+     */
     hideModal() {
         this.modal.style.display = 'none';
     }
 
+    /**
+     *
+     * @param artistName
+     */
     updateArtistName(artistName) {
         this.artistNameElement.textContent = artistName;
     }
 
+    /**
+     *
+     * @param errors
+     */
     displayErrors(errors) {
         const errorElements = this.form.querySelectorAll('.error');
         errorElements.forEach(el => el.remove());
@@ -53,10 +79,16 @@ class ContactView {
         });
     }
 
+    /**
+     *
+     */
     resetForm() {
         this.form.reset();
     }
 
+    /**
+     *
+     */
     trapFocus() {
         const focusableElements = this.modal.querySelectorAll('button, input, textarea');
         const firstElement = focusableElements[0];

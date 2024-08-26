@@ -14,6 +14,10 @@ class MediaModel {
         this.likeModel = new LikeModel(mediaData.likes);
     }
 
+    /**
+     *
+     * @returns {string}
+     */
     getMediaPath() {
         if (this.image) {
             return `assets/media/${this.image}`;
@@ -23,14 +27,26 @@ class MediaModel {
         return '';
     }
 
+    /**
+     *
+     * @returns {boolean}
+     */
     isImage() {
         return Boolean(this.image);
     }
 
+    /**
+     *
+     * @returns {boolean}
+     */
     isVideo() {
         return Boolean(this.video);
     }
 
+    /**
+     *
+     * @returns {*}
+     */
     getLikes() {
         return this.likeModel.getLikes();
     }

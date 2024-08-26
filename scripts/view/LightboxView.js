@@ -4,6 +4,10 @@ class LightboxView {
         document.body.appendChild(this.lightboxElement);
     }
 
+    /**
+     *
+     * @returns {HTMLDivElement} dom
+     */
     buildDOM() {
         const dom = document.createElement('div');
         dom.classList.add('lightbox');
@@ -16,18 +20,34 @@ class LightboxView {
         return dom;
     }
 
+    /**
+     *
+     * @param handler
+     */
     bindClose(handler) {
         this.lightboxElement.querySelector('.lightbox__close').addEventListener('click', handler);
     }
 
+    /**
+     *
+     * @param handler
+     */
     bindNext(handler) {
         this.lightboxElement.querySelector('.lightbox__next').addEventListener('click', handler);
     }
 
+    /**
+     *
+     * @param handler
+     */
     bindPrev(handler) {
         this.lightboxElement.querySelector('.lightbox__prev').addEventListener('click', handler);
     }
 
+    /**
+     *
+     * @param mediaModel
+     */
     showMedia(mediaModel) {
         const container = this.lightboxElement.querySelector('.lightbox__container');
         const mediaElement = document.createElement(mediaModel.isImage() ? 'img' : 'video');
@@ -37,14 +57,20 @@ class LightboxView {
             mediaElement.setAttribute('controls', 'controls');
         }
 
-        container.innerHTML = ''; // Clear the container
+        container.innerHTML = '';
         container.appendChild(mediaElement);
     }
 
+    /**
+     *
+     */
     show() {
         this.lightboxElement.style.display = 'block';
     }
 
+    /**
+     *
+     */
     hide() {
         this.lightboxElement.style.display = 'none';
         window.setTimeout(() => {

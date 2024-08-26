@@ -4,25 +4,42 @@ class LikeModel {
         this.listeners = [];
     }
 
+    /**
+     *
+     * @returns {*}
+     */
     getLikes() {
         return this.likes;
     }
 
+    /**
+     *
+     */
     incrementLikes() {
         this.likes++;
         debugger;
         this.notifyListeners();
     }
 
+    /**
+     *
+     */
     decrementLikes() {
         this.likes--;
         this.notifyListeners();
     }
 
+    /**
+     *
+     * @param callback
+     */
     addListener(callback) {
         this.listeners.push(callback);
     }
 
+    /**
+     *
+     */
     notifyListeners() {
         this.listeners.forEach(callback => callback(this.likes));
     }

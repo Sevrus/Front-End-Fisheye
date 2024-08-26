@@ -13,10 +13,18 @@ class ContactController {
         this.contactView.updateArtistName(artistName);
     }
 
+    /**
+     *
+     * @param field
+     * @param value
+     */
     handleInputChange(field, value) {
         this.contactModel.setFields(field, value);
     }
 
+    /**
+     *
+     */
     handleSubmit() {
         const errors = this.contactModel.validateFields();
 
@@ -30,10 +38,16 @@ class ContactController {
         }
     }
 
+    /**
+     *
+     */
     handleCloseModal() {
         this.contactView.hideModal();
     }
 
+    /**
+     *
+     */
     showContactModal() {
         this.contactView.showModal();
     }

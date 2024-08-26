@@ -1,5 +1,9 @@
 const jsonURL = '../data/photographers.json';
 
+/**
+ *
+ * @returns {Promise<any|*[]>}
+ */
 const getDatas = async () => {
     try {
         const response = await fetch(jsonURL);
