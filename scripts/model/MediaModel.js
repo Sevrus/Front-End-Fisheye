@@ -28,6 +28,16 @@ class MediaModel {
     }
 
     /**
+     * @returns {string}
+     */
+    getVideoThumbnailPath() {
+        if (this.video) {
+            return `assets/media/thumbnail/${this.video.split('.')[0]}-thumbnail.jpg`;
+        }
+        return '';
+    }
+
+    /**
      *
      * @returns {boolean}
      */

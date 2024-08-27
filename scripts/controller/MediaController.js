@@ -100,6 +100,29 @@ class MediaController {
         this.sortSelect.addEventListener('change', (event) => {
             this.sortMedia(event.target.value);
         });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+                this.navigateGallery(event.key === 'ArrowRight' ? 1 : -1);
+            }
+        });
+    }
+
+    /**
+     * Navigate the gallery with the left/right arrow keys
+     * @param {number} direction
+     */
+    navigateGallery(direction) {
+        const mediaElements = Array.from(document.querySelectorAll('.gallery-section figure .media-element'));
+        const activeElement = document.activeElement;
+
+        let currentIndex = mediaElements.indexOf(activeElement);
+        if (currentIndex === -1) return;
+
+        let newIndex = currentIndex + direction;
+        if (newIndex >= 0 && newIndex < mediaElements.length) {
+            mediaElements[newIndex].focus();
+        }
     }
 
     /**

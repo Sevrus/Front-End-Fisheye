@@ -17,7 +17,6 @@ class LikeModel {
      */
     incrementLikes() {
         this.likes++;
-        debugger;
         this.notifyListeners();
     }
 
