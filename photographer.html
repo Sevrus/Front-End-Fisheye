@@ -19,12 +19,21 @@
     </section>
     <section class="sort-section">
         <label for="sort-select">Trier par</label>
-        <select class="sort-select" id="sort-select">
-            <option value="date">Date</option>
-            <option value="title">Titre</option>last-
-            <option value="likes">Popularité</option>
-        </select>
+        <div class="custom-select">
+            <select class="sort-select" id="sort-select">
+                <option value="date">Date</option>
+                <option value="title">Titre</option>
+                <option value="likes">Popularité</option>
+            </select>
+            <div class="selected-option">Date</div>
+            <div class="select-options">
+                <div class="select-option" data-value="date">Date</div>
+                <div class="select-option" data-value="title">Titre</div>
+                <div class="select-option" data-value="likes">Popularité</div>
+            </div>
+        </div>
     </section>
+
     <section class="gallery-section"></section>
     <div class="sticky-footer">
         <span class="total-likes"></span>

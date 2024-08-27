@@ -48,30 +48,107 @@ body {
     box-shadow: 1px 2px 6px rgba(0, 0, 0, .4);
 }
 
-/*SORT SECTION*/
+/*SELECT CUSTOM*/
 .sort-section {
-    margin: 20px 0 58px;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    margin-top: 9px;
+    margin-bottom: 23px;
 }
 
 .sort-section label {
     font-size: 1.1rem;
     font-weight: 700;
-    margin-right: 25px;
+}
+
+.custom-select {
+    position: relative;
+    width: 170px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.selected-option {
+    background-color: #901C1C;
+    padding: 23px 60px 23px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.selected-option::after {
+    content: '';
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    padding: 5px;
+    transform-origin: center;
+    transition: transform 0.3s ease;
+}
+
+.selected-option.open::after {
+    transform: translateY(-50%) rotate(225deg);
 }
 
 .sort-select {
-    width: 170px;
-    background-color: #901C1C;
-    outline: none;
-    border: none;
-    border-radius: 5px 5px 0 0;
-    color: #fff;
-    font-size: 1.1rem;
-    font-weight: 700;
+    display: none;
 }
 
-.sort-select:focus {
-    outline: none;
+.select-options {
+    position: absolute;
+    top: 101%;
+    left: 0;
+    right: 0;
+    background-color: #901C1C;
+    cursor: pointer;
+    user-select: none;
+    padding: 0;
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius: 5px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, .25);
+    z-index: 1000;
+}
+
+.select-options.open {
+    display: flex;
+}
+
+.select-option {
+    padding: 15px 0 15px 18px;
+    width: 100%;
+    cursor: pointer;
+    position: relative;
+}
+
+.select-option:nth-of-type(1)::after,
+.select-option:nth-of-type(2)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+    width: 150px;
+    height: 1px;
+    background-color: #fff;
+}
+
+.select-option:hover {
+    background-color: #DB8876;
+}
+
+.select-option:nth-of-type(1):hover {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.select-option:nth-of-type(3):hover {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 /*MEDIA GALLERY*/

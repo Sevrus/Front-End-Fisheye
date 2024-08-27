@@ -93,6 +93,46 @@ class MediaController {
         this.displayMedia(sortedMedia);
     }
 
+    initializeCustomSelect() {
+        const selectElement = document.getElementById('sort-select');
+        const selectedOptionElement = document.querySelector('.selected-option');
+        const selectOptions = document.querySelector('.select-options');
+        const options = document.querySelectorAll('.select-option');
+
+        const selectedValue = selectElement.value;
+        const selectedOption = Array.from(options).find(option => option.getAttribute('data-value') === selectedValue);
+        if (selectedOption) {
+            selectedOptionElement.textContent = selectedOption.textContent;
+        }
+
+        selectedOptionElement.addEventListener('click', () => {
+            selectedOptionElement.classList.toggle('open');
+            selectOptions.classList.toggle('open');
+        });
+
+        options.forEach(option => {
+            option.addEventListener('click', () => {
+                const value = option.getAttribute('data-value');
+                const text = option.textContent;
+
+                selectElement.value = value;
+
+                selectedOptionElement.textContent = text;
+                selectOptions.classList.remove('open');
+                selectedOptionElement.classList.remove('open');
+
+                this.sortMedia(value);
+            });
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!selectOptions.contains(event.target) && !selectedOptionElement.contains(event.target)) {
+                selectOptions.classList.remove('open');
+                selectedOptionElement.classList.remove('open');
+            }
+        });
+    }
+
     /**
      *
      */
@@ -132,6 +172,7 @@ class MediaController {
     async initialize() {
         await this.fetchAndDisplayMedia();
         this.initializeEventListeners();
+        this.initializeCustomSelect();
     }
 }
 
