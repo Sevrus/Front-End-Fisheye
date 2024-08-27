@@ -51,3 +51,10 @@ jspm_packages/
 
 # dotenv environment variables file
 .env
+
+###  Original photographs file
+# Original media folder
+assets/media/originaux
+
+# Original photographers folder
+assets/photographers/originaux

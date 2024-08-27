@@ -17,14 +17,6 @@ class MediaView {
 
         const mediaFigure = document.createElement('figure');
 
-        // const mediaElement = document.createElement(this.model.isImage() ? 'img' : 'video');
-        // mediaElement.className = 'media-element';
-        // mediaElement.setAttribute('src', mediaPath);
-        // mediaElement.setAttribute('alt', title);
-        // if (this.model.isVideo()) {
-        //     mediaElement.setAttribute('controls', 'controls');
-        // }
-
         if (this.model.isImage()) {
             mediaPath = this.model.getMediaPath();
             const imgElement = document.createElement('img');
