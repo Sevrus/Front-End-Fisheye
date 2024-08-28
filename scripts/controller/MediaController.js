@@ -99,29 +99,70 @@ class MediaController {
         const selectOptions = document.querySelector('.select-options');
         const options = document.querySelectorAll('.select-option');
 
-        const selectedValue = selectElement.value;
-        const selectedOption = Array.from(options).find(option => option.getAttribute('data-value') === selectedValue);
-        if (selectedOption) {
-            selectedOptionElement.textContent = selectedOption.textContent;
-        }
+        const updateSelectedOption = (option) => {
+            const value = option.getAttribute('data-value');
+            const text = option.textContent;
+
+            selectElement.setAttribute('aria-expanded', 'false');
+            selectElement.value = value;
+            selectedOptionElement.textContent = text;
+
+            options.forEach(opt => opt.setAttribute('aria-selected', 'false'));
+            option.setAttribute('aria-selected', 'true');
+            selectOptions.classList.remove('open');
+            selectedOptionElement.classList.remove('open');
+
+            this.sortMedia(value);
+        };
 
         selectedOptionElement.addEventListener('click', () => {
+            const expanded = selectOptions.classList.toggle('open');
             selectedOptionElement.classList.toggle('open');
-            selectOptions.classList.toggle('open');
+            selectedOptionElement.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+
+            if (expanded) {
+                options[0].focus();
+            }
         });
 
-        options.forEach(option => {
+        selectedOptionElement.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                const expanded = selectOptions.classList.toggle('open');
+                selectedOptionElement.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+
+                if (expanded) {
+                    options[0].focus();
+                }
+            } else if (event.key === 'ArrowDown') {
+                event.preventDefault();
+                options[0].focus();
+            }
+        });
+
+        options.forEach((option, index) => {
             option.addEventListener('click', () => {
-                const value = option.getAttribute('data-value');
-                const text = option.textContent;
+                updateSelectedOption(option);
+            });
 
-                selectElement.value = value;
-
-                selectedOptionElement.textContent = text;
-                selectOptions.classList.remove('open');
-                selectedOptionElement.classList.remove('open');
-
-                this.sortMedia(value);
+            option.addEventListener('keydown', (event) => {
+                if (event.key === 'ArrowDown') {
+                    event.preventDefault();
+                    const nextOption = options[index + 1] || options[0];
+                    nextOption.focus();
+                } else if (event.key === 'ArrowUp') {
+                    event.preventDefault();
+                    const prevOption = options[index - 1] || options[options.length - 1];
+                    prevOption.focus();
+                } else if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    updateSelectedOption(option);
+                } else if (event.key === 'Escape') {
+                    event.preventDefault();
+                    selectOptions.classList.remove('open');
+                    selectedOptionElement.setAttribute('aria-expanded', 'false');
+                    selectedOptionElement.focus();
+                }
             });
         });
 
@@ -129,6 +170,7 @@ class MediaController {
             if (!selectOptions.contains(event.target) && !selectedOptionElement.contains(event.target)) {
                 selectOptions.classList.remove('open');
                 selectedOptionElement.classList.remove('open');
+                selectedOptionElement.setAttribute('aria-expanded', 'false');
             }
         });
     }

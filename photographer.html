@@ -17,20 +17,18 @@
     <section class="photograph-header">
         <button class="contact_button header-button" aria-label="Contact Me">Contactez-moi</button>
     </section>
+
     <section class="sort-section">
         <label for="sort-select">Trier par</label>
-        <div class="custom-select">
-            <select class="sort-select" id="sort-select">
-                <option value="date">Date</option>
-                <option value="title">Titre</option>
-                <option value="likes">Popularité</option>
-            </select>
-            <div class="selected-option">Date</div>
-            <div class="select-options">
-                <div class="select-option" data-value="date">Date</div>
-                <div class="select-option" data-value="title">Titre</div>
-                <div class="select-option" data-value="likes">Popularité</div>
+        <div class="custom-select" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="sort-select" aria-controls="sort-select-list">
+            <div class="selected-option" id="sort-select" role="button" tabindex="0" aria-labelledby="selected-option-text">
+                <span id="selected-option-text">Date</span>
             </div>
+            <ul class="select-options sort-select" role="listbox" id="sort-select-list">
+                <li class="select-option" role="option" tabindex="-1" aria-selected="true" data-value="date">Date</li>
+                <li class="select-option" role="option" tabindex="-1" aria-selected="false" data-value="title">Titre</li>
+                <li class="select-option" role="option" tabindex="-1" aria-selected="false" data-value="likes">Popularité</li>
+            </ul>
         </div>
     </section>
 

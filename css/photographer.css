@@ -99,6 +99,7 @@ body {
 }
 
 .select-options {
+    list-style: none;
     position: absolute;
     top: 101%;
     left: 0;
