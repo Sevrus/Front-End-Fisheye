@@ -1,4 +1,4 @@
-import getDatas from '../utils/fetchData.js';
+import DataService from '../services/DataService.js';
 import MediaModel from '../model/MediaModel.js';
 import MediaView from '../view/MediaView.js';
 import LikeController from '../controller/LikeController.js';
@@ -11,6 +11,8 @@ class MediaController {
         this.dailyRateElement = document.querySelector(".daily-rate");
         this.params = new URLSearchParams(window.location.search);
         this.photographerId = this.params.get('id');
+
+        this.photographerData = new DataService('../data/photographers.json');
     }
 
     /**
@@ -18,12 +20,15 @@ class MediaController {
      * @returns {Promise<void>}
      */
     async fetchAndDisplayMedia() {
-        const data = await getDatas();
-        const mediaData = data.media.filter(media => media.photographerId === Number(this.photographerId));
+        const {photographers, media} = await this.photographerData.get();
+        console.log(photographers, media);
+        const mediaData = media.filter(media => media.photographerId === Number(this.photographerId));
         this.mediaModels = mediaData.map(media => new MediaModel(media));
         this.displayMedia(this.mediaModels);
 
-        this.updateStickyFooter(data.photographers);
+
+
+        this.updateStickyFooter(photographers);
     }
 
     /**

@@ -1,4 +1,4 @@
-import getDatas from "../utils/fetchData.js";
+import DataService from '../services/DataService.js';
 import PhotographerModel from '../model/PhotographerModel.js'
 import PhotographerView from '../view/PhotographerView.js'
 import ContactController from './ContactController.js';
@@ -10,6 +10,8 @@ class PhotographerController {
         this.params = new URLSearchParams(window.location.search);
         this.idOfPhotographer = this.params.get('id');
         this.contactController = null;
+
+        this.photographerData = new DataService('../data/photographers.json');
     }
 
     /**
@@ -17,11 +19,12 @@ class PhotographerController {
      * @returns {Promise<void>}
      */
     async fetchAndDisplayData() {
-        const data = await getDatas();
-        const photographersData = data.photographers;
+        // const data = await getDatas();
+        const {photographers, media} = await this.photographerData.get();
+        console.log(photographers, media);
 
         if (this.idOfPhotographer) {
-            const photographerData = photographersData.find((photographer) => photographer.id === Number(this.idOfPhotographer));
+            const photographerData = photographers.find((photographer) => photographer.id === Number(this.idOfPhotographer));
             const photographerModel = new PhotographerModel(photographerData);
             const photographerView = new PhotographerView(photographerModel);
             photographerView.createPhotographerHeaderDOM();
@@ -29,7 +32,7 @@ class PhotographerController {
             const artistName = photographerModel.name;
             this.contactController = new ContactController(artistName);
         } else {
-            this.displayPhotographers(photographersData);
+            this.displayPhotographers(photographers);
         }
     }
 
