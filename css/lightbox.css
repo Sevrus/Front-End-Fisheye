@@ -4,7 +4,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #fff;
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 10;
     animation: lightboxIn .5s;
     transition: opacity .3s;
@@ -14,7 +14,7 @@
     opacity: 0;
 }
 
-.lightbox__prev, .lightbox__next {
+.lightbox-prev, .lightbox-next {
     border: none;
     background: url("../assets/icons/arrow.svg") center center / 20px 34px no-repeat;
     width: 50px;
@@ -26,24 +26,24 @@
     z-index: 11;
 }
 
-.lightbox__prev {
+.lightbox-prev {
     right: auto;
-    left: 350px;
+    left: 370px;
     transform: rotate(180deg);
 }
 
-.lightbox__next {
-    right: 350px;
+.lightbox-next {
+    right: 370px;
 }
 
-.lightbox__close {
+.lightbox-close {
     width: 42px;
     height: 42px;
     border: none;
     background: url("../assets/icons/close-red.svg") center center / 100% 100% no-repeat transparent;
     position: fixed;
-    top: 50px;
-    right: 358px;
+    top: 60px;
+    right: 373px;
     z-index: 12;
 }
 
@@ -58,23 +58,34 @@
     opacity: 1;
 }
 
-.lightbox__container {
-    margin-left: 50px;
-    margin-right: 50px;
+.lightbox-container {
+    margin: 13px auto 0;
+    background-color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
+    border-radius: 10px;
+    min-height: 98%;
+    width: 62%;
 }
 
-.lightbox__container img, .lightbox__container video {
+.lightbox-container img, .lightbox-container video {
     width: 1050px;
-    height: 900px;
+    height: 850px;
     object-fit: cover;
     animation: lightboxIn .5s;
 }
 
-.lightbox__loader {
+#lightbox-title {
+    position: absolute;
+    bottom: 12px;
+    left: 22%;
+    font-size: 1.5rem;
+    color: #901C1C;
+    z-index: 9999;
+}
+
+.lightbox-loader {
     width: 44px;
     height: 44px;
     opacity: .7;

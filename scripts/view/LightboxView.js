@@ -11,11 +11,15 @@ class LightboxView {
     buildDOM() {
         const dom = document.createElement('div');
         dom.classList.add('lightbox');
+        dom.setAttribute('role', 'dialog');
+        dom.setAttribute('aria-labelledby', 'lightbox-caption');
+
         dom.innerHTML = `
-            <button class="lightbox__close">Fermer</button>
-            <button class="lightbox__next">Suivant</button>
-            <button class="lightbox__prev">Précédent</button>
-            <div class="lightbox__container"></div>
+            <button class="lightbox-close" aria-label="Close lightbox">Fermer</button>
+            <button class="lightbox-next" aria-label="Next image">Suivant</button>
+            <button class="lightbox-prev" aria-label="Previous image">Précédent</button>
+            <div class="lightbox-container" aria-live="polite"></div>
+            <h2 id="lightbox-title"></h2>
         `;
         return dom;
     }
@@ -25,7 +29,7 @@ class LightboxView {
      * @param handler
      */
     bindClose(handler) {
-        this.lightboxElement.querySelector('.lightbox__close').addEventListener('click', handler);
+        this.lightboxElement.querySelector('.lightbox-close').addEventListener('click', handler);
     }
 
     /**
@@ -33,7 +37,7 @@ class LightboxView {
      * @param handler
      */
     bindNext(handler) {
-        this.lightboxElement.querySelector('.lightbox__next').addEventListener('click', handler);
+        this.lightboxElement.querySelector('.lightbox-next').addEventListener('click', handler);
     }
 
     /**
@@ -41,7 +45,7 @@ class LightboxView {
      * @param handler
      */
     bindPrev(handler) {
-        this.lightboxElement.querySelector('.lightbox__prev').addEventListener('click', handler);
+        this.lightboxElement.querySelector('.lightbox-prev').addEventListener('click', handler);
     }
 
     /**
@@ -49,9 +53,9 @@ class LightboxView {
      * @param mediaModel
      */
     showMedia(mediaModel) {
-        const container = this.lightboxElement.querySelector('.lightbox__container');
+        const container = this.lightboxElement.querySelector('.lightbox-container');
         const mediaElement = document.createElement(mediaModel.isImage() ? 'img' : 'video');
-        mediaElement.className = 'lightbox__media';
+        mediaElement.className = 'lightbox-media';
         mediaElement.setAttribute('src', mediaModel.getMediaPath());
         if (mediaModel.isVideo()) {
             mediaElement.setAttribute('controls', 'controls');

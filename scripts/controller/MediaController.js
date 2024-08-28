@@ -26,8 +26,6 @@ class MediaController {
         this.mediaModels = mediaData.map(media => new MediaModel(media));
         this.displayMedia(this.mediaModels);
 
-
-
         this.updateStickyFooter(photographers);
     }
 

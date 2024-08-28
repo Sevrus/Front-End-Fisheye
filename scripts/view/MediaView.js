@@ -77,12 +77,12 @@ class MediaView {
      */
     #addLightboxListeners(element) {
         element.addEventListener('click', () => {
-            new LightboxController(this.model, this.mediaList).openLightbox();
+            new LightboxController(this.model, this.mediaList).openLightbox(this.model.title);
         });
 
         element.addEventListener('keydown', (event) => {
             if (event.key === 'Enter') {
-                new LightboxController(this.model, this.mediaList).openLightbox();
+                new LightboxController(this.model, this.mediaList).openLightbox(this.model.title);
             }
         });
     }

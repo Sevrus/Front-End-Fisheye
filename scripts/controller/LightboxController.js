@@ -5,6 +5,7 @@ class LightboxController {
     constructor(mediaModel, mediaList) {
         this.model = new LightboxModel(mediaList, mediaModel);
         this.view = new LightboxView();
+        this.lightboxTitleElement = document.getElementById('lightbox-title');
 
         this.view.bindClose(this.closeLightbox.bind(this));
         this.view.bindNext(this.showNextMedia.bind(this));
@@ -13,9 +14,18 @@ class LightboxController {
         document.addEventListener('keyup', this.handleKeyUp.bind(this));
     }
 
-    openLightbox() {
+    openLightbox(title) {
+        this.updateLightboxTitle(title);
         this.view.showMedia(this.model.getCurrentMedia());
         this.view.show();
+    }
+
+    updateLightboxTitle(title) {
+        if (this.lightboxTitleElement) {
+            this.lightboxTitleElement.textContent = title;
+        } else {
+            console.warn(title, "Lightbox title element not found!");
+        }
     }
 
     closeLightbox() {
