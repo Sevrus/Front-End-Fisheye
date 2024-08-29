@@ -1,6 +1,6 @@
 import DataService from '../services/DataService.js';
-import PhotographerModel from '../model/PhotographerModel.js'
-import PhotographerView from '../view/PhotographerView.js'
+import PhotographerModel from '../model/PhotographerModel.js';
+import PhotographerView from '../view/PhotographerView.js';
 import ContactController from './ContactController.js';
 
 /**
@@ -118,5 +118,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.addEventListener('beforeunload', () => {
         photographerController.destroy();
-    })
+    });
 });

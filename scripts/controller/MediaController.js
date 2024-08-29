@@ -109,7 +109,7 @@ class MediaController {
      *
      * This method sets up event listeners and handles interactions for a custom select element.
      * It updates the selected option when an option is clicked or navigated to using the arrow keys.
-     * It closes the options list when the escape key is pressed or when a click occurs outside of the select element.
+     * It closes the options list when the escape key is pressed or when a click occurs outside the select element.
      */
     initializeCustomSelect() {
         const selectElement = document.getElementById('sort-select');
