@@ -1,6 +1,11 @@
 import LightboxController from '../controller/LightboxController.js';
 import LikeView from "./LikeView.js";
 
+/**
+ * Represents a MediaView object.
+ *
+ * @class
+ */
 class MediaView {
     constructor(model, mediaList) {
         this.model = model;
@@ -8,8 +13,9 @@ class MediaView {
     }
 
     /**
+     * Creates a DOM element for the media object based on the model.
      *
-     * @returns {HTMLElement} mediaFigure
+     * @return {Element} The created media DOM element.
      */
     createMediaDOM() {
         const { title } = this.model;
@@ -72,8 +78,9 @@ class MediaView {
     }
 
     /**
-     * Private method to add listeners that open the lightbox
-     * @param {HTMLElement} element - The media element (image or video thumbnail)
+     * Adds event listeners to the specified element for opening a lightbox.
+     *
+     * @param {Element} element - The element to attach the event listeners to.
      */
     #addLightboxListeners(element) {
         element.addEventListener('click', () => {
@@ -87,6 +94,11 @@ class MediaView {
         });
     }
 
+    /**
+     * Retrieves the current like view.
+     *
+     * @return {object} The current like view.
+     */
     getLikeView() {
         return this.likeView;
     }

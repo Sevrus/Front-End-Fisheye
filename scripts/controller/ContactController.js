@@ -1,6 +1,10 @@
 import ContactModel from '../model/ContactModel.js';
 import ContactView from '../view/ContactView.js';
 
+/**
+ * Represents a Contact Controller that handles interaction between the Contact Model and Contact View.
+ * @class
+ */
 class ContactController {
     constructor(artistName) {
         this.contactModel = new ContactModel();
@@ -14,16 +18,20 @@ class ContactController {
     }
 
     /**
+     * Updates the input field value in the contact model.
      *
-     * @param field
-     * @param value
+     * @param {string} field - The name of the input field to update.
+     * @param {string} value - The new value for the input field.
      */
     handleInputChange(field, value) {
         this.contactModel.setFields(field, value);
     }
 
     /**
+     * Handles the form submission.
      *
+     * This method validates the fields of the contact model and displays the validation errors
+     * if any. If there are no errors, it resets the form, hides the modal, and resets the form data.
      */
     handleSubmit() {
         const errors = this.contactModel.validateFields();
@@ -31,7 +39,6 @@ class ContactController {
         if (errors.length > 0) {
             this.contactView.displayErrors(errors);
         } else {
-            console.log("Données du formulaire :", this.contactModel.getFormData());
             this.contactView.resetForm();
             this.contactView.hideModal();
             this.contactModel.resetFormData();
@@ -39,14 +46,14 @@ class ContactController {
     }
 
     /**
-     *
+     * Closes the modal for the contact view.
      */
     handleCloseModal() {
         this.contactView.hideModal();
     }
 
     /**
-     *
+     * Displays the contact modal.
      */
     showContactModal() {
         this.contactView.showModal();

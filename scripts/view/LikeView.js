@@ -1,3 +1,7 @@
+/**
+ * The LikeView class represents a view that displays the number of likes and provides functionality
+ * to update the like count and bind event handlers to the heart icon for liking/unliking.
+ */
 class LikeView {
     constructor(likesCountElement, heartIconElement) {
         this.likesCountElement = likesCountElement;
@@ -5,8 +9,9 @@ class LikeView {
     }
 
     /**
+     * Updates the like count with the specified value.
      *
-     * @param newCount
+     * @param {number} newCount - The new like count value.
      */
     updateLikeCount(newCount) {
         this.likesCountElement.textContent = `${newCount} `;
@@ -20,7 +25,6 @@ class LikeView {
     bindLikeClick(callback) {
         this.heartIconElement.addEventListener('click', callback);
 
-        // Adds an event listener for the Enter key
         this.heartIconElement.addEventListener('keydown', (event) => {
             if (event.key === 'Enter') {
                 callback();

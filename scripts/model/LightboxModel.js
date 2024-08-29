@@ -1,3 +1,6 @@
+/**
+ * Represents a model for a lightbox component.
+ */
 class LightboxModel {
     constructor(mediaList, currentMedia) {
         this.mediaList = mediaList;
@@ -5,16 +8,19 @@ class LightboxModel {
     }
 
     /**
+     * Retrieves the current media item from the media list.
      *
-     * @returns {*}
+     * @return {object} The current media item.
      */
     getCurrentMedia() {
         return this.mediaList[this.currentIndex];
     }
 
     /**
+     * Updates the index to point to the next media in the media list and returns the current media.
+     * If the index reaches the end of the media list, it wraps around and goes back to the beginning.
      *
-     * @returns {*}
+     * @return {object} The next media object from the media list.
      */
     getNextMedia() {
         if (this.currentIndex < this.mediaList.length - 1) {
@@ -26,8 +32,11 @@ class LightboxModel {
     }
 
     /**
+     * Decrements the current index and returns the previous media from the media list.
+     * If the current index is already at the first media, it wraps around to the last media
+     * in the list.
      *
-     * @returns {*}
+     * @return {object} The previous media object from the media list.
      */
     getPrevMedia() {
         if (this.currentIndex > 0) {

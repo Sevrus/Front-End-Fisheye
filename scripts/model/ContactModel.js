@@ -1,10 +1,14 @@
+/**
+ * Class representing a Contact Model.
+ * @class
+ */
 class ContactModel {
     constructor() {
         this.resetFormData();
     }
 
     /**
-     *
+     * Resets the form data by setting all form field values to empty strings.
      */
     resetFormData() {
         this.formData = {
@@ -16,17 +20,21 @@ class ContactModel {
     }
 
     /**
+     * Sets the value of a field in the formData object.
      *
-     * @param field
-     * @param value
+     * @param {string} field - The name of the field to set.
+     * @param {any} value - The value to set for the field.
      */
     setFields(field, value) {
         this.formData[field] = value;
     }
 
     /**
+     * Validates the form fields.
      *
-     * @returns {*[]}
+     * @return {Array} - An array of objects representing the validation errors. Each object has two properties: field and message.
+     *                  - The field property specifies the name of the field that failed validation.
+     *                  - The message property provides a description of the validation error.
      */
     validateFields() {
         const { 'first-name': firstName, 'last-name': lastName, email, message } = this.formData;
@@ -50,14 +58,6 @@ class ContactModel {
         }
 
         return errors;
-    }
-
-    /**
-     *
-     * @returns {*|{message: string, "first-name": string, email: string, "last-name": string}}
-     */
-    getFormData() {
-        return this.formData;
     }
 }
 

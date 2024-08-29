@@ -28,22 +28,22 @@
 
 .lightbox-prev {
     right: auto;
-    left: 370px;
+    left: calc(50% - 575px);
     transform: rotate(180deg);
 }
 
 .lightbox-next {
-    right: 370px;
+    right: calc(50% - 575px);
 }
 
 .lightbox-close {
-    width: 42px;
-    height: 42px;
+    width: 35px;
+    height: 35px;
     border: none;
     background: url("../assets/icons/close-red.svg") center center / 100% 100% no-repeat transparent;
     position: fixed;
-    top: 60px;
-    right: 373px;
+    top: calc(50% - 425px);
+    right: calc(50% - 567px);
     z-index: 12;
 }
 
@@ -59,14 +59,14 @@
 }
 
 .lightbox-container {
-    margin: 13px auto 0;
+    margin: calc((100vh - 950px) / 2) auto 0;
     background-color: white;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 10px;
-    min-height: 98%;
-    width: 62%;
+    height: 950px;
+    width: 1150px;
 }
 
 .lightbox-container img, .lightbox-container video {
@@ -78,8 +78,8 @@
 
 #lightbox-title {
     position: absolute;
-    bottom: 12px;
-    left: 22%;
+    bottom: calc(50% - 465px);
+    left: calc(50% - 525px);
     font-size: 1.5rem;
     color: #901C1C;
     z-index: 9999;

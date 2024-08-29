@@ -1,11 +1,19 @@
+/**
+ * Represents a view for a photographer.
+ * @class
+ */
 class PhotographerView {
     constructor(model) {
         this.model = model;
     }
 
     /**
+     * Creates a DOM element for a user card.
+     * The method retrieves information from the model object, including name, id, city, country, tagline, and price.
+     * It then generates the required HTML elements, including an article, a link, an image, a heading, paragraphs for location, quote, and price.
+     * Finally, it appends the generated elements to the article element and returns the article.
      *
-     * @returns {HTMLElement}
+     * @return {Element} - The generated user card DOM element.
      */
     createUserCardDOM() {
         const {name, id, city, country, tagline, price} = this.model;
@@ -45,7 +53,9 @@ class PhotographerView {
     }
 
     /**
-     *
+     * Creates the DOM structure for displaying photographer header information.
+     * The method retrieves the necessary information from the model to create the header.
+     * It creates HTML elements and appends them to the appropriate parent elements.
      */
     createPhotographerHeaderDOM() {
         const { name, city, country, tagline } = this.model;

@@ -3,6 +3,11 @@ import MediaModel from '../model/MediaModel.js';
 import MediaView from '../view/MediaView.js';
 import LikeController from '../controller/LikeController.js';
 
+/**
+ * MediaController class is responsible for controlling the media objects and their display in the gallery section.
+ * @class
+ * @public
+ */
 class MediaController {
     constructor() {
         this.gallerySection = document.querySelector(".gallery-section");
@@ -16,12 +21,12 @@ class MediaController {
     }
 
     /**
+     * Fetches photographers and media data and displays the media associated with the current photographer.
      *
-     * @returns {Promise<void>}
+     * @return {Promise<void>} - A promise that resolves when the media is fetched and displayed.
      */
     async fetchAndDisplayMedia() {
         const {photographers, media} = await this.photographerData.get();
-        console.log(photographers, media);
         const mediaData = media.filter(media => media.photographerId === Number(this.photographerId));
         this.mediaModels = mediaData.map(media => new MediaModel(media));
         this.displayMedia(this.mediaModels);
@@ -30,8 +35,9 @@ class MediaController {
     }
 
     /**
+     * Clears the gallery section and displays media cards for each media model.
      *
-     * @param mediaModels
+     * @param {Array} mediaModels - An array of media models to display.
      */
     displayMedia(mediaModels) {
         this.gallerySection.innerHTML = '';
@@ -47,8 +53,9 @@ class MediaController {
     }
 
     /**
+     * Updates the sticky footer with the information of the photographer.
      *
-     * @param photographers
+     * @param {Array} photographers - An array of photographers.
      */
     updateStickyFooter(photographers) {
         const photographer = photographers.find(p => p.id === Number(this.photographerId));
@@ -59,7 +66,7 @@ class MediaController {
     }
 
     /**
-     *
+     * Updates the total likes display based on the likes of all media models.
      */
     updateTotalLikesDisplay() {
         const totalLikes = this.mediaModels.reduce((sum, media) => {
@@ -74,8 +81,9 @@ class MediaController {
     }
 
     /**
+     * Sorts the media based on the given criteria.
      *
-     * @param {string} criteria
+     * @param {string} criteria - The criteria used for sorting the media. Valid values are 'date', 'title', and 'likes'.
      */
     sortMedia(criteria) {
         let sortedMedia;
@@ -96,6 +104,13 @@ class MediaController {
         this.displayMedia(sortedMedia);
     }
 
+    /**
+     * Initializes the custom select functionality.
+     *
+     * This method sets up event listeners and handles interactions for a custom select element.
+     * It updates the selected option when an option is clicked or navigated to using the arrow keys.
+     * It closes the options list when the escape key is pressed or when a click occurs outside of the select element.
+     */
     initializeCustomSelect() {
         const selectElement = document.getElementById('sort-select');
         const selectedOptionElement = document.querySelector('.selected-option');
@@ -179,7 +194,16 @@ class MediaController {
     }
 
     /**
+     * Initializes the event listeners for the component.
      *
+     * The method sets up event listeners for the "change" event on the "sortSelect" element. When the
+     * event occurs, the method calls the "sortMedia" function with the value of the selected option as
+     * the argument.
+     *
+     * Additionally, the method sets up an event listener for the "keydown" event on the "document" object.
+     * When the event occurs, the method checks if the pressed key is either "ArrowRight" or "ArrowLeft".
+     * If so, the method calls the "navigateGallery" function with either 1 or -1 as the argument,
+     * depending on which key was pressed.
      */
     initializeEventListeners() {
         this.sortSelect.addEventListener('change', (event) => {
@@ -194,8 +218,9 @@ class MediaController {
     }
 
     /**
-     * Navigate the gallery with the left/right arrow keys
-     * @param {number} direction
+     * Navigates the gallery in the specified direction.
+     *
+     * @param {number} direction - The direction in which to navigate the gallery. Positive number represents moving forward, while a negative number represents moving backward.
      */
     navigateGallery(direction) {
         const mediaElements = Array.from(document.querySelectorAll('.gallery-section figure .media-element'));
@@ -211,17 +236,32 @@ class MediaController {
     }
 
     /**
+     * Initializes the module.
      *
-     * @returns {Promise<void>}
+     * This method calls the fetchAndDisplayMedia method to fetch and display media,
+     * initializes the event listeners using the initializeEventListeners method,
+     * and initializes the custom select using the initializeCustomSelect method.
+     *
+     * If an error occurs during initialization, it will be logged to the console.
+     *
+     * @return {Promise<void>} A promise that resolves once the module is initialized.
      */
     async initialize() {
-        await this.fetchAndDisplayMedia();
-        this.initializeEventListeners();
-        this.initializeCustomSelect();
+        try {
+            await this.fetchAndDisplayMedia();
+            this.initializeEventListeners();
+            this.initializeCustomSelect();
+        } catch (error) {
+            console.error('An error occurred during initialization :', error);
+        }
     }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const mediaController = new MediaController();
-    mediaController.initialize();
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        const mediaController = new MediaController();
+        await mediaController.initialize();
+    } catch (error) {
+        console.error('An error has occurred :', error);
+    }
 });

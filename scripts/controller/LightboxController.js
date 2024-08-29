@@ -1,11 +1,15 @@
 import LightboxView from '../view/LightboxView.js';
 import LightboxModel from '../model/LightboxModel.js';
 
+/**
+ * Creates a LightboxController instance that manages the navigation and closing of a lightbox.
+ *
+ * @class
+ */
 class LightboxController {
     constructor(mediaModel, mediaList) {
         this.model = new LightboxModel(mediaList, mediaModel);
         this.view = new LightboxView();
-        this.lightboxTitleElement = document.getElementById('lightbox-title');
 
         this.view.bindClose(this.closeLightbox.bind(this));
         this.view.bindNext(this.showNextMedia.bind(this));
@@ -14,18 +18,9 @@ class LightboxController {
         document.addEventListener('keyup', this.handleKeyUp.bind(this));
     }
 
-    openLightbox(title) {
-        this.updateLightboxTitle(title);
+    openLightbox() {
         this.view.showMedia(this.model.getCurrentMedia());
         this.view.show();
-    }
-
-    updateLightboxTitle(title) {
-        if (this.lightboxTitleElement) {
-            this.lightboxTitleElement.textContent = title;
-        } else {
-            console.warn(title, "Lightbox title element not found!");
-        }
     }
 
     closeLightbox() {
@@ -44,7 +39,8 @@ class LightboxController {
     }
 
     /**
-     * Management of navigation and closing of the lightbox
+     * Management of navigation and closing of the lightbox.
+     *
      * @param {KeyboardEvent} event
      */
     handleKeyUp(event) {
