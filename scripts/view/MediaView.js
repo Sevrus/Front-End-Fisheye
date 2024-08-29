@@ -23,35 +23,70 @@ class MediaView {
 
         const mediaFigure = document.createElement('figure');
 
-        if (this.model.isImage()) {
+        if (this.model.isImage()) { // Aucun changement ici
             mediaPath = this.model.getMediaPath();
-            const imgElement = document.createElement('img');
-            imgElement.className = 'media-element';
-            imgElement.setAttribute('src', mediaPath);
-            imgElement.setAttribute('alt', title);
-            imgElement.setAttribute('tabindex', '0');
+            const imgElement = this.#createMediaElement(mediaPath, title);
             mediaFigure.appendChild(imgElement);
-
             this.#addLightboxListeners(imgElement);
 
         } else if (this.model.isVideo()) {
             mediaPath = this.model.getVideoThumbnailPath();
-            const videoThumbnail = document.createElement('img');
-            videoThumbnail.className = 'media-element';
-            videoThumbnail.setAttribute('src', mediaPath);
-            videoThumbnail.setAttribute('alt', title);
-            videoThumbnail.setAttribute('tabindex', '0');
+            const videoThumbnail = this.#createMediaElement(mediaPath, title);
             mediaFigure.appendChild(videoThumbnail);
-
             this.#addLightboxListeners(videoThumbnail);
         }
 
+        const figcaptionElement = this.#createFigcaptionElement(title);
+
+        mediaFigure.appendChild(figcaptionElement);
+
+        return mediaFigure;
+    }
+
+    /**
+     * Creates and returns a media element.
+     *
+     * @param {string} mediaPath - The path of the media (image/video).
+     * @param {string} title - The title of the media.
+     * @return {Element} The created media element.
+     */
+    #createMediaElement(mediaPath, title) {
+        const mediaElement = document.createElement('img');
+        mediaElement.className = 'media-element';
+        mediaElement.setAttribute('src', mediaPath);
+        mediaElement.setAttribute('alt', title);
+        mediaElement.setAttribute('tabindex', '0');
+
+        return mediaElement;
+    }
+
+    /**
+     * Creates and returns a figcaption element for media.
+     *
+     * @param {string} title - The title of the media.
+     * @return {Element} The created figcaption element.
+     */
+    #createFigcaptionElement(title) {
         const figcaptionElement = document.createElement('figcaption');
         figcaptionElement.className = 'figcaption-element';
 
         const titleElement = document.createElement('h2');
         titleElement.textContent = title;
 
+        const likesElement = this.#createLikesElement();
+
+        figcaptionElement.appendChild(titleElement);
+        figcaptionElement.appendChild(likesElement);
+
+        return figcaptionElement;
+    }
+
+    /**
+     * Creates and returns a likes element.
+     *
+     * @return {Element} The created likes element.
+     */
+    #createLikesElement() {
         const likesElement = document.createElement('div');
         likesElement.className = 'likes';
 
@@ -67,14 +102,9 @@ class MediaView {
         likesElement.appendChild(likesCount);
         likesElement.appendChild(heartIcon);
 
-        figcaptionElement.appendChild(titleElement);
-        figcaptionElement.appendChild(likesElement);
-
-        mediaFigure.appendChild(figcaptionElement);
-
         this.likeView = new LikeView(likesCount, heartIcon);
 
-        return mediaFigure;
+        return likesElement;
     }
 
     /**
@@ -83,15 +113,30 @@ class MediaView {
      * @param {Element} element - The element to attach the event listeners to.
      */
     #addLightboxListeners(element) {
-        element.addEventListener('click', () => {
-            new LightboxController(this.model, this.mediaList).openLightbox(this.model.title);
+        const mediaModel = this.model;
+
+        element.addEventListener('click', (event) => {
+            event.stopPropagation();
+            this.openLightbox(mediaModel);
         });
 
         element.addEventListener('keydown', (event) => {
             if (event.key === 'Enter') {
-                new LightboxController(this.model, this.mediaList).openLightbox(this.model.title);
+                event.stopPropagation();
+                event.preventDefault();
+                this.openLightbox(mediaModel);
             }
         });
+    }
+
+    /**
+     * Opens the lightbox with the specified media model.
+     *
+     * @param {object} mediaModel - The media model to open in the lightbox.
+     */
+    openLightbox(mediaModel) {
+        const controller = new LightboxController(mediaModel, this.mediaList);
+        controller.openLightbox(mediaModel);
     }
 
     /**

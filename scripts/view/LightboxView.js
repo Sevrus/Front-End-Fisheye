@@ -17,7 +17,7 @@ class LightboxView {
         const dom = document.createElement('div');
         dom.classList.add('lightbox');
         dom.setAttribute('role', 'dialog');
-        dom.setAttribute('aria-labelledby', 'lightbox-caption');
+        dom.setAttribute('aria-labelledby', 'lightbox-title');
 
         dom.innerHTML = `
             <button class="lightbox-close" aria-label="Close lightbox">Fermer</button>
@@ -82,7 +82,11 @@ class LightboxView {
      * Displays the lightbox element by setting its display property to 'block'.
      */
     show() {
-        this.lightboxElement.style.display = 'block';
+        if (this.lightboxElement) {
+            this.lightboxElement.style.display = 'block';
+        } else {
+            console.error("Lightbox element not found");
+        }
     }
 
     /**
@@ -93,7 +97,16 @@ class LightboxView {
         this.lightboxElement.style.display = 'none';
         window.setTimeout(() => {
             this.lightboxElement.remove();
-        }, 500)
+        }, 500);
+    }
+
+    /**
+     * Returns all focusable elements within the lightbox.
+     *
+     * @return {NodeList}
+     */
+    getFocusableElements() {
+        return this.lightboxElement.querySelectorAll('a, button, input, textarea, select, [tabindex]:not([tabindex="-1"]), video[controls]');
     }
 }
 
