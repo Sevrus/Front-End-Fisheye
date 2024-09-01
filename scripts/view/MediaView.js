@@ -23,7 +23,7 @@ class MediaView {
 
         const mediaFigure = document.createElement('figure');
 
-        if (this.model.isImage()) { // Aucun changement ici
+        if (this.model.isImage()) {
             mediaPath = this.model.getMediaPath();
             const imgElement = this.#createMediaElement(mediaPath, title);
             mediaFigure.appendChild(imgElement);

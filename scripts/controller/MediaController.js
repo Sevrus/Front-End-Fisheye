@@ -1,7 +1,7 @@
 import DataService from '../services/DataService.js';
-import MediaModel from '../model/MediaModel.js';
 import MediaView from '../view/MediaView.js';
 import LikeController from '../controller/LikeController.js';
+import MediaFactory from "../../factories/MediaFactory.js";
 
 /**
  * MediaController class is responsible for controlling the media objects and their display in the gallery section.
@@ -26,11 +26,10 @@ class MediaController {
      * @return {Promise<void>} - A promise that resolves when the media is fetched and displayed.
      */
     async fetchAndDisplayMedia() {
-        const {photographers, media} = await this.photographerData.get();
+        const { photographers, media } = await this.photographerData.get();
         const mediaData = media.filter(media => media.photographerId === Number(this.photographerId));
-        this.mediaModels = mediaData.map(media => new MediaModel(media));
+        this.mediaModels = mediaData.map(media => MediaFactory.createMedia(media));
         this.displayMedia(this.mediaModels);
-
         this.updateStickyFooter(photographers);
     }
 
@@ -58,10 +57,12 @@ class MediaController {
      * @param {Array} photographers - An array of photographers.
      */
     updateStickyFooter(photographers) {
-        const photographer = photographers.find(p => p.id === Number(this.photographerId));
+        const photographer = photographers.find(ph => ph.id === Number(this.photographerId));
         if (photographer) {
-            this.updateTotalLikesDisplay();
+
             this.dailyRateElement.textContent = `${photographer.price}€ / jour`;
+            this.updateTotalLikesDisplay();
+
         }
     }
 
@@ -69,15 +70,8 @@ class MediaController {
      * Updates the total likes display based on the likes of all media models.
      */
     updateTotalLikesDisplay() {
-        const totalLikes = this.mediaModels.reduce((sum, media) => {
-            const likes = media.getLikes();
-            return sum + likes;
-        }, 0);
-        if (this.totalLikesElement) {
-            this.totalLikesElement.textContent = `${totalLikes} ❤️`;
-        } else {
-            console.warn("totalLikesElement not found!");
-        }
+        const totalLikes = this.mediaModels.reduce((sum, mediaModel) => sum + mediaModel.likeModel.getLikes(), 0);
+        this.totalLikesElement.textContent = totalLikes;
     }
 
     /**
