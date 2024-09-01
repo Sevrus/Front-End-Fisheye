@@ -1,7 +1,7 @@
 import DataService from '../services/DataService.js';
 import MediaView from '../view/MediaView.js';
 import LikeController from '../controller/LikeController.js';
-import MediaFactory from "../../factories/MediaFactory.js";
+import MediaFactory from "../factories/MediaFactory.js";
 
 /**
  * MediaController class is responsible for controlling the media objects and their display in the gallery section.

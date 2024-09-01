@@ -1,5 +1,5 @@
-import PhotoModel from "../scripts/model/PhotoModel.js";
-import VideoModel from "../scripts/model/VideoModel.js";
+import PhotoModel from "../model/PhotoModel.js";
+import VideoModel from "../model/VideoModel.js";
 
 class MediaFactory {
     /**
